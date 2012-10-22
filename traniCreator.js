@@ -1,30 +1,96 @@
 var T = T || {};
 
+T.paused = true;
+T.startedTime = 0;
+T.currentTime = 0;
+T.transcript = {};
+
 T.create = function() {
   function init() {
     generateOnInputSubmit();
+    keyboardListen();
+  }
+
+  function addEvent(element, eventName, callback) {
+    $(element).on(eventName, callback);
   }
 
   function generateOnInputSubmit() {
     $('input.url').on('keydown', function(e) {
+      var url = $(this).val();
       if(e.keyCode == 13) {
-        console.log($(this).val());
+        $('.videoWrapper').html(T.template(url));
+        setTimeout(function() {
+          $('.videoWrapper, .transcript').removeClass('hidden');
+        }, 450);
+        $f('player_1').addEvent('ready', setupVideoListeners);
+
       }
     });
   }
 
-  function generateVideoHtml() {
-
+  function setupVideoListeners() {
+    setupPlayListener();
+    setupPauseListener();
   }
 
-  function addVideo() {
+  function setupPlayListener() {
+    $f('player_1').addEvent('playProgress', function(data) {
+      T.currentTime = Math.floor(data.seconds);
+      T.paused = false;
+      if(T.transcript[T.currentTime]) {
+          $('.highlight').removeClass('highlight');
+          events[curTime].addClass('highlight');
+        }
+    });
+  }
+
+  function setupPauseListener() {
+    $f('player_1').addEvent('pause', function() {
+      T.paused = true;
+      console.log('paused');
+    });
+  }
+
+  function keyboardListen() {
+    var lastKey;
+    $(window).on('keydown', function(e) {
+      if(lastKey && (lastKey == 17 && e.keyCode == 32)) {
+        e.preventDefault();
+        console.log(T.paused)
+        if(T.paused) {
+          $f('player_1').api('play');
+        } else {
+          $f('player_1').api('pause');
+        }
+        return false;
+      } else if(lastKey && (lastKey == 17 && e.keyCode == 74)) {
+        e.preventDefault();
+        $f('player_1').api('play');
+        $('textarea').focus();
+        console.log('start');
+        T.startedTime = T.currentTime;
+        return false;
+      } else if(lastKey && (lastKey == 17 && e.keyCode == 76)) {
+        e.preventDefault();
+        console.log('finish: ' + T.startedTime);
+        T.transcript[T.startedTime] = $('textarea').val();
+        var startTag = '<span data-time="' + T.startedTime + '">';
+        $('.transcriptPreview').append(startTag + $('textarea').val() + '</span>');
+        $('textarea').val('');
+        T.startedTime = T.currentTime;
+        return false;
+      }
+      lastKey = e.keyCode;
+    });
+  }
+
+  function hideVideo() {
 
   }
 
   return {
-    init: init,
-    generateVideoHtml: generateVideoHtml,
-    addVideo: addVideo
+    init: init
   }
 }
 
