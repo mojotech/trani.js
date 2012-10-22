@@ -9,6 +9,7 @@ T.create = function() {
   function init() {
     generateOnInputSubmit();
     keyboardListen();
+    hideUrlOnSubmitClick();
   }
 
   function addEvent(element, eventName, callback) {
@@ -19,14 +20,23 @@ T.create = function() {
     $('input.url').on('keydown', function(e) {
       var url = $(this).val();
       if(e.keyCode == 13) {
-        $('.videoWrapper').html(T.template(url));
-        setTimeout(function() {
-          $('.videoWrapper, .transcript').removeClass('hidden');
-        }, 450);
-        $f('player_1').addEvent('ready', setupVideoListeners);
-
+        hideUrl(url);
       }
     });
+  }
+  function hideUrlOnSubmitClick() {
+    $('button.submit').on('click', function() {
+      hideUrl($('input.url').val());
+    });
+  }
+  function hideUrl(url) {
+    $('.videoWrapper').html(T.template(url));
+      setTimeout(function() {
+        $('.videoWrapper, .transcriptPreview, .transcriptEntry').removeClass('hidden');
+        $('.videoWrapper').fitVids();
+      }, 450);
+    $f('player_1').addEvent('ready', setupVideoListeners);
+    $('.enterUrl').addClass('hidden');
   }
 
   function playVideoAtClickedSentence() {
@@ -107,4 +117,5 @@ T.create = function() {
 
 $(document).ready(function() {
   T.create().init();
+
 });

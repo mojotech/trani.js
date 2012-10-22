@@ -71,44 +71,99 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 body {
   background-color: #e0e0e0;
   font-family: 'Helvetica Neue', 'Helvetica';
-  color: #333;
+  color: #444;
   background: url("../img/mojo_main_tile.svg");
 }
 /* line 14, ../sass/screen.scss */
 body h2 {
+  color: rgba(0, 0, 0, 0.3);
   width: 100%;
   text-align: center;
-  font-size: 40px;
+  font-size: 90px;
   font-weight: bold;
+  padding-top: 80px;
 }
-/* line 20, ../sass/screen.scss */
+/* line 22, ../sass/screen.scss */
 body > div {
-  -webkit-transition: height 200ms, opacity 200ms;
-  -moz-transition: height 200ms, opacity 200ms;
-  -o-transition: height 200ms, opacity 200ms;
-  transition: height 200ms, opacity 200ms;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-transition: all 200ms;
+  -moz-transition: all 200ms;
+  -o-transition: all 200ms;
+  transition: all 200ms;
   width: 60%;
   padding: 32px;
   margin: 0 auto;
   text-align: center;
 }
-/* line 26, ../sass/screen.scss */
+/* line 29, ../sass/screen.scss */
+body > div input, body > div textarea {
+  border-radius: 10px;
+  border: 0;
+  background-color: rgba(225, 225, 225, 0.8);
+}
+/* line 34, ../sass/screen.scss */
 body > div input {
   width: 95%;
   padding: 10px 2.5%;
   font-size: 20px;
+  margin: 16px 0;
 }
-/* line 31, ../sass/screen.scss */
+/* line 40, ../sass/screen.scss */
 body > div textarea {
   width: 100%;
 }
-/* line 34, ../sass/screen.scss */
+/* line 43, ../sass/screen.scss */
 body > div iframe {
   width: 100%;
-  height: 500px;
+  min-height: 300px;
 }
-/* line 39, ../sass/screen.scss */
+/* line 48, ../sass/screen.scss */
+body > .transcriptPreview {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(135, 135, 135, 0.5);
+  text-align: left;
+  width: 50%;
+  padding: 16px 5%;
+}
+/* line 56, ../sass/screen.scss */
 body .hidden {
+  padding: 0;
   opacity: 0;
   height: 0;
+}
+/* line 61, ../sass/screen.scss */
+body button.submit {
+  border: 1px solid #56b12e;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-background-clip: padding;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  background-color: #85d557;
+  -webkit-box-shadow: 0 1px 1px #2f7012, inset 0 1px 0 rgba(255, 255, 255, 0.35), inset 0 0 3px rgba(255, 255, 255, 0.7);
+  -moz-box-shadow: 0 1px 1px #2f7012, inset 0 1px 0 rgba(255, 255, 255, 0.35), inset 0 0 3px rgba(255, 255, 255, 0.7);
+  box-shadow: 0 1px 1px #2f7012, inset 0 1px 0 rgba(255, 255, 255, 0.35), inset 0 0 3px rgba(255, 255, 255, 0.7);
+  background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #68c334), color-stop(100%, #85d557));
+  background-image: -webkit-linear-gradient(bottom, #68c334 0%, #85d557 100%);
+  background-image: -moz-linear-gradient(bottom, #68c334 0%, #85d557 100%);
+  background-image: -o-linear-gradient(bottom, #68c334 0%, #85d557 100%);
+  background-image: linear-gradient(bottom, #68c334 0%, #85d557 100%);
+  padding: 8px 50px;
+  font-size: 19px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #f0f0f0;
+  cursor: pointer;
 }

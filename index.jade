@@ -6,6 +6,7 @@ html
     script(src='trani.template.js')
     script(src='http://a.vimeocdn.com/js/froogaloop2.min.js')
     script(src='trani.js')
+    script(src='fitVids.js')
     link(rel='stylesheet', type='text/css', href='trani.css')
     link(rel='stylesheet', type='text/css', href='stylesheets/screen.css')
   body
@@ -13,7 +14,8 @@ html
     div.enterUrl
       h3 Enter your vimeo url to begin transcribing.
       input(name='vimeoUrl', value="http://player.vimeo.com/video/42565022").url
+      button.submit Load Video
     div.videoWrapper.hidden
-    div.transcriptPreview
-    div.transcriptEntry
+    div.transcriptPreview.hidden
+    div.transcriptEntry.hidden
       textarea(name='transcript').transcriptEntry
