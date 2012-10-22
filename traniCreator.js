@@ -29,6 +29,16 @@ T.create = function() {
     });
   }
 
+  function playVideoAtClickedSentence() {
+    $('.transcriptPreview span').off('click');
+
+    $('.transcriptPreview span').on('click', function(i) {
+        tmpTime = Number($(this).data("time"));
+        $f('player_1').api('seekTo', tmpTime);
+        $f('player_1').api('play');
+      });
+  }
+
   function setupVideoListeners() {
     setupPlayListener();
     setupPauseListener();
@@ -40,7 +50,7 @@ T.create = function() {
       T.paused = false;
       if(T.transcript[T.currentTime]) {
           $('.highlight').removeClass('highlight');
-          events[curTime].addClass('highlight');
+          $('span[data-time="' + T.currentTime + '"]').addClass('highlight');
         }
     });
   }
@@ -79,6 +89,7 @@ T.create = function() {
         $('.transcriptPreview').append(startTag + $('textarea').val() + '</span>');
         $('textarea').val('');
         T.startedTime = T.currentTime;
+        playVideoAtClickedSentence();
         return false;
       }
       lastKey = e.keyCode;
