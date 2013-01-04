@@ -2,7 +2,7 @@
   $.fn.trani = function(args) {
     var id = '#' + this.attr('id');
     var events = {};
-    var froogInstance = $f(this.attr('id'));
+    var froogInstance = $f(this[0]);
     froogInstance.addEvent('ready', checkTime);
 
     function jumpToClickedSentance() {
