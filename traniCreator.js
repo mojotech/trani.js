@@ -27,16 +27,17 @@ T.create = function() {
   function hideUrlOnSubmitClick() {
     $('button.submit').on('click', function() {
       hideUrl($('input.url').val());
+      $('textarea.transcriptEntry')[0].focus()
     });
   }
   function hideUrl(url) {
     $('.videoWrapper').html(T.template(url));
       setTimeout(function() {
-        $('.videoWrapper, .transcriptPreview, .transcriptEntry').removeClass('hidden');
+        $('.hidden').removeClass('hidden');
         $('.videoWrapper').fitVids();
+        $('.enterUrl').addClass('hidden');
       }, 450);
     $f('player_1').addEvent('ready', setupVideoListeners);
-    $('.enterUrl').addClass('hidden');
   }
 
   function playVideoAtClickedSentence() {
@@ -72,34 +73,41 @@ T.create = function() {
     });
   }
 
+  function playPauseVideo(e) {
+    e.preventDefault();
+    if(T.paused) {
+      $f('player_1').api('play');
+      T.startedTime = T.currentTime;
+      $('textarea.transcriptEntry')[0].focus()
+    } else {
+      $f('player_1').api('pause');
+    }
+  }
+
+  function clearTextArea() {
+    $('textarea').val('');
+  }
+
+  function insertNewSentance(e) {
+    e.preventDefault();
+    T.transcript[T.startedTime] = $('textarea').val();
+    var startTag = '<span data-time="' + T.startedTime + '">';
+    $('.transcriptPreview').append(startTag + $('textarea').val() + '</span>');
+    clearTextArea();
+    T.startedTime = T.currentTime;
+    playVideoAtClickedSentence();
+  }
+
   function keyboardListen() {
     var lastKey;
     $(window).on('keydown', function(e) {
       if(lastKey && (lastKey == 17 && e.keyCode == 32)) {
-        e.preventDefault();
-        console.log(T.paused)
-        if(T.paused) {
-          $f('player_1').api('play');
-        } else {
-          $f('player_1').api('pause');
-        }
+        playPauseVideo(e);
+        lastKey = 0;
         return false;
-      } else if(lastKey && (lastKey == 17 && e.keyCode == 74)) {
-        e.preventDefault();
-        $f('player_1').api('play');
-        $('textarea').focus();
-        console.log('start');
-        T.startedTime = T.currentTime;
-        return false;
-      } else if(lastKey && (lastKey == 17 && e.keyCode == 76)) {
-        e.preventDefault();
-        console.log('finish: ' + T.startedTime);
-        T.transcript[T.startedTime] = $('textarea').val();
-        var startTag = '<span data-time="' + T.startedTime + '">';
-        $('.transcriptPreview').append(startTag + $('textarea').val() + '</span>');
-        $('textarea').val('');
-        T.startedTime = T.currentTime;
-        playVideoAtClickedSentence();
+      } else if(e.keyCode == 13) {
+        insertNewSentance(e);
+        lastKey = 0;
         return false;
       }
       lastKey = e.keyCode;
@@ -117,5 +125,4 @@ T.create = function() {
 
 $(document).ready(function() {
   T.create().init();
-
 });
