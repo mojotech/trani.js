@@ -5,7 +5,10 @@
 <script src='trani.js'></script>
 <script>
 $(document).ready(function() {
-  $('.vimeoPlayer').trani('.time-span');
+  $('#player_1').trani({
+    transcriptDiv: "#player_1_transcript",
+    spanClass: '.time-span'
+  });
 });
 </script>
 

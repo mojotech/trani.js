@@ -6,7 +6,7 @@
     froogInstance.addEvent('ready', checkTime);
 
     function jumpToClickedSentance() {
-      $(args).click(function(i) {
+      $(args.spanClass).click(function(i) {
         tmpTime = Number($(this).data("time"));
         froogInstance.api('seekTo', tmpTime);
         froogInstance.api('play');
@@ -14,7 +14,7 @@
     }
 
     function initTimes(args) {
-      $(id + "_transcript").find(args).each(function() {
+      $(args.transcriptDiv).find(args.spanClass).each(function() {
         var self = $(this);
         events[self.data('time')] = self;
       });
