@@ -19,7 +19,7 @@ body {
     font-weight: bold;
     padding-top: 80px;
   }
-  > div {
+  > div, h4, p {
     @include border-radius(3px);
     @include transition(all 200ms);
     width: 60%;
@@ -27,9 +27,9 @@ body {
     margin: 0 auto;
     text-align: center;
     input, textarea {
-      border-radius: 10px;
-      border: 0;
-      background-color: rgba(225,225,225,0.8);
+      @include border-radius(6px);
+      border: 1px solid rgba(225,225,225,0.9);
+      background-color: rgba(235,235,235,0.8);
     }
     input {
       width: 95%;
@@ -40,10 +40,18 @@ body {
     textarea {
       width: 100%;
     }
+    input:focus, textarea:focus {
+      outline: none;
+    }
     iframe {
       width: 100%;
       min-height: 300px;
     }
+  }
+  > h4, p {
+    font-size: 14px;
+    text-align: left;
+    padding: 0 0 8px;
   }
   > .transcriptPreview {
     @include border-radius(3px);
@@ -52,6 +60,10 @@ body {
     text-align: left;
     width: 50%;
     padding: 16px 5%;
+    margin-bottom: 32px;
+  }
+  div.transcriptEntry {
+    padding-top: 0px;
   }
   .hidden {
     padding:0;
